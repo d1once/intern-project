@@ -176,6 +176,30 @@
       "email": "foo.bar@gmail.com",
       "password": "AM7zl6Mg",
       "id": 21
+    },
+    {
+      "firstName": "Dionis",
+      "lastName": "Senja",
+      "photoURL": "",
+      "email": "dionisenja@gmail.com",
+      "password": "123456",
+      "id": 22
+    },
+    {
+      "firstName": "Dionis",
+      "lastName": "Senja",
+      "photoURL": "",
+      "email": "dionisenja@gmail.com",
+      "password": "123456",
+      "id": 23
+    },
+    {
+      "firstName": "Dionis",
+      "lastName": "Senja",
+      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
+      "email": "dionisenja@gmail.com",
+      "password": "123",
+      "id": 24
     }
   ]
 }
