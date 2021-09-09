@@ -3,6 +3,7 @@ import Hero from "./components/Hero/Hero";
 import SignIn from "./components/Signin/SignIn";
 import SignUp from "./components/Signup/SignUp";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ProtectedDashboardRoute from "./components/Routes/ProtectedDashboardRoute";
 
 function App() {
   return (
@@ -10,8 +11,12 @@ function App() {
       <Switch>
         <Route path="/" exact component={Hero} />
         <Route path="/signup" exact component={SignUp} />
-        <Route path="/signin" exact component={SignIn} />
-        <Route path="/dashboard/:id" exact component={Dashboard} />
+        <ProtectedDashboardRoute path="/signin" exact component={SignIn} />
+        <ProtectedDashboardRoute
+          path="/dashboard/:id"
+          exact
+          component={Dashboard}
+        />
       </Switch>
     </div>
   );

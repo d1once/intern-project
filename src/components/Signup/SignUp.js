@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
-import cuid from 'cuid';
+import cuid from "cuid";
 
 import {
   Flex,
@@ -20,13 +20,13 @@ import { Link as RDLink } from "react-router-dom";
 
 export default function SignIn() {
   const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     photoURL: "",
     email: "",
     password: "",
   });
-  const { firstName, lastName, photoURL, email, password } = state;
+  const { firstname, lastname, photoURL, email, password } = state;
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -38,26 +38,27 @@ export default function SignIn() {
   };
 
   const newUser = {
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     photoURL:
       photoURL === ""
         ? "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg"
         : photoURL,
     email,
     password,
-    id: cuid()
+    id: cuid(),
   };
 
   const handleClick = async () => {
     await axios.post("http://localhost:3001/users", newUser);
     setState({
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       photoURL: "",
       email: "",
       password: "",
     });
+    localStorage.setItem("isAuthenticated", true);
     history.push(`/dashboard/${newUser.id}`);
   };
 
@@ -87,8 +88,8 @@ export default function SignIn() {
               <Input
                 type="text"
                 placeholder="John"
-                value={firstName}
-                name="firstName"
+                value={firstname}
+                name="firstname"
                 onChange={handleChange}
               />
             </FormControl>
@@ -97,8 +98,8 @@ export default function SignIn() {
               <Input
                 type="text"
                 placeholder="Wick"
-                value={lastName}
-                name="lastName"
+                value={lastname}
+                name="lastname"
                 onChange={handleChange}
               />
             </FormControl>

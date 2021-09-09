@@ -150,6 +150,10 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, user, ...rest }) => {
   let history = useHistory();
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    history.push("/signin");
+  };
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -202,7 +206,7 @@ const MobileNav = ({ onOpen, user, ...rest }) => {
                   ml="2"
                 >
                   <Text fontSize="sm">
-                    {user.firstName} {user.lastName}
+                    {user.firstname} {user.lastname}
                   </Text>
                   <Text fontSize="xs" color="gray.600">
                     {user.isAdmin ? "Admin" : "User"}
@@ -221,9 +225,7 @@ const MobileNav = ({ onOpen, user, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={() => history.push("/signin")}>
-                Sign out
-              </MenuItem>
+              <MenuItem onClick={handleLogout}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
