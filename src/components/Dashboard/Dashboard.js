@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router";
+import axios from "axios";
 import {
   IconButton,
   Avatar,
@@ -31,6 +33,9 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 
+// My imports
+import Card from "../Card/Card";
+
 const LinkItems = [
   { name: "Home", icon: FiHome },
   { name: "Trending", icon: FiTrendingUp },
@@ -40,6 +45,15 @@ const LinkItems = [
 ];
 
 export default function Dashboard({ children }) {
+  const { id } = useParams();
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    const getUserById = async () => {
+      const response = await axios.get(`http://localhost:3001/users/${id}`);
+      setUser(response.data);
+    };
+    getUserById();
+  }, []);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -61,9 +75,15 @@ export default function Dashboard({ children }) {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} user={user} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
+        <Card
+          firstName={user.firstName}
+          lastName={user.lastName}
+          photoURL={user.photoURL}
+          isAdmin={user.isAdmin ? "Admin" : "User"}
+        />
       </Box>
     </Box>
   );
@@ -128,7 +148,8 @@ const NavItem = ({ icon, children, ...rest }) => {
   );
 };
 
-const MobileNav = ({ onOpen, ...rest }) => {
+const MobileNav = ({ onOpen, user, ...rest }) => {
+  let history = useHistory();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -173,21 +194,18 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
+                <Avatar size={"sm"} src={user.photoURL} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">
+                    {user.firstName} {user.lastName}
+                  </Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {user.isAdmin ? "Admin" : "User"}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
@@ -203,7 +221,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={() => history.push("/signin")}>
+                Sign out
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>

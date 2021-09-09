@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
+import cuid from 'cuid';
 
 import {
   Flex,
@@ -45,6 +46,7 @@ export default function SignIn() {
         : photoURL,
     email,
     password,
+    id: cuid()
   };
 
   const handleClick = async () => {
@@ -56,7 +58,7 @@ export default function SignIn() {
       email: "",
       password: "",
     });
-    history.push("/dashboard");
+    history.push(`/dashboard/${newUser.id}`);
   };
 
   return (
