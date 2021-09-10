@@ -11,12 +11,8 @@ function App() {
       <Switch>
         <Route path="/" exact component={Hero} />
         <Route path="/signup" exact component={SignUp} />
-        <ProtectedDashboardRoute path="/signin" exact component={SignIn} />
-        <ProtectedDashboardRoute
-          path="/dashboard/:id"
-          exact
-          component={Dashboard}
-        />
+        <Route path="/signin" exact component={SignIn} />
+        <Route path="/dashboard/:id" exact component={Dashboard} />
       </Switch>
     </div>
   );

@@ -1,3 +1,6 @@
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -14,6 +17,36 @@ import {
 import { Link as RDLink } from "react-router-dom";
 
 export default function SignIn() {
+  const history = useHistory();
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = state;
+  const [regUser, setRegUser] = useState([]);
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setState({
+      ...state,
+      [e.target.name]: value,
+    });
+  };
+  useEffect(() => {
+    const getUser = async (email, password) => {
+      const response = await axios.get(
+        `http://localhost:3001/users?email=${email}&password=${password}`
+      );
+      setRegUser(response.data);
+    };
+    getUser(email, password);
+  }, [email, password]);
+  console.log(regUser[0]);
+  const handleSign = () => {
+    const { email: regEmail, password: regPassword, id: regId } = regUser[0];
+    if (regEmail === email && regPassword === password) {
+      history.push(`/dashboard/${regId}`);
+    }
+  };
   return (
     <Flex
       minH={"100vh"}
@@ -34,11 +67,21 @@ export default function SignIn() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -55,6 +98,7 @@ export default function SignIn() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={handleSign}
               >
                 Sign in
               </Button>

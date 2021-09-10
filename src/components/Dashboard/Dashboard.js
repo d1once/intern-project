@@ -79,8 +79,8 @@ export default function Dashboard({ children }) {
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
         <Card
-          firstName={user.firstName}
-          lastName={user.lastName}
+          firstname={user.firstname}
+          lastname={user.lastname}
           photoURL={user.photoURL}
           isAdmin={user.isAdmin ? "Admin" : "User"}
         />
