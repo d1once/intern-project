@@ -35,6 +35,7 @@ import {
 
 // My imports
 import Card from "../Card/Card";
+import Table from "../Table/Table";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -47,12 +48,20 @@ const LinkItems = [
 export default function Dashboard({ children }) {
   const { id } = useParams();
   const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const getUserById = async () => {
       const response = await axios.get(`http://localhost:3001/users/${id}`);
       setUser(response.data);
     };
     getUserById();
+  }, []);
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await axios.get(`http://localhost:3001/users`);
+      setUsers(response.data);
+    };
+    getUsers();
   }, []);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -84,6 +93,7 @@ export default function Dashboard({ children }) {
           photoURL={user.photoURL}
           isAdmin={user.isAdmin ? "Admin" : "User"}
         />
+        {user.isAdmin ? <Table users={users} isAdmin={user.isAdmin} /> : null}
       </Box>
     </Box>
   );
