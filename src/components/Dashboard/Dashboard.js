@@ -36,6 +36,7 @@ import {
 // My imports
 import Card from "../Card/Card";
 import Table from "../Table/Table";
+import TableWithEdit from "../TableWithEdit/TableWithEdit";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
@@ -93,7 +94,8 @@ export default function Dashboard({ children }) {
           photoURL={user.photoURL}
           isAdmin={user.isAdmin ? "Admin" : "User"}
         />
-        {user.isAdmin ? <Table users={users} isAdmin={user.isAdmin} /> : null}
+        {/*{user.isAdmin ? <Table users={users} isAdmin={user.isAdmin} /> : null}*/}
+        {user.isAdmin ? <TableWithEdit users={users} /> : null}
       </Box>
     </Box>
   );
