@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import {
   Flex,
   useColorModeValue,
@@ -40,6 +41,8 @@ import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 
 export default function TableWithEdit({ users }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [currentUserID, setCurrentUserID] = useState("");
+  const [deletedIds, setDeletedIds] = useState([0]);
   const onAlertClose = () => setIsAlertOpen(false);
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -49,7 +52,13 @@ export default function TableWithEdit({ users }) {
   const firstTdColorValue = useColorModeValue("gray.400", "gray.400");
   const secondTdColorValue = useColorModeValue("gray.500");
   const thirdTdColorValue = useColorModeValue("gray.400", "gray.400");
-  const filteredUsers = users.filter((us) => us.id !== 0);
+  const filteredUsers = users.filter((us) => !deletedIds.includes(us.id));
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:3001/users/${id}`);
+    const cDeletedIds = [...deletedIds];
+    cDeletedIds.push(id);
+    setDeletedIds(cDeletedIds);
+  };
   return (
     <Flex
       w="full"
@@ -185,7 +194,6 @@ export default function TableWithEdit({ users }) {
                         onClose={onClose}
                         size="sm"
                       >
-                        <DrawerOverlay />
                         <DrawerContent>
                           <DrawerCloseButton />
                           <DrawerHeader borderBottomWidth="1px">
@@ -249,38 +257,41 @@ export default function TableWithEdit({ users }) {
                         colorScheme="red"
                         variant="outline"
                         icon={<BsFillTrashFill />}
-                        onClick={() => setIsAlertOpen(true)}
+                        onClick={() => {
+                          setIsAlertOpen(true);
+                          setCurrentUserID(token.id);
+                        }}
                       />
                       <AlertDialog
                         isOpen={isAlertOpen}
                         leastDestructiveRef={cancelRef}
                         onClose={onAlertClose}
                       >
-                        <AlertDialogOverlay>
-                          <AlertDialogContent>
-                            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                              Delete User
-                            </AlertDialogHeader>
+                        <AlertDialogContent>
+                          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            Delete User
+                          </AlertDialogHeader>
 
-                            <AlertDialogBody>
-                              Are you sure? You can't undo this action
-                              afterwards.
-                            </AlertDialogBody>
+                          <AlertDialogBody>
+                            Are you sure? You can't undo this action afterwards.
+                          </AlertDialogBody>
 
-                            <AlertDialogFooter>
-                              <Button ref={cancelRef} onClick={onAlertClose}>
-                                Cancel
-                              </Button>
-                              <Button
-                                colorScheme="red"
-                                onClick={onAlertClose}
-                                ml={3}
-                              >
-                                Delete
-                              </Button>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialogOverlay>
+                          <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onAlertClose}>
+                              Cancel
+                            </Button>
+                            <Button
+                              colorScheme="red"
+                              onClick={() => {
+                                handleDelete(currentUserID);
+                                onAlertClose();
+                              }}
+                              ml={3}
+                            >
+                              Delete
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
                       </AlertDialog>
                     </>
                   </ButtonGroup>

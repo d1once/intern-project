@@ -24,6 +24,7 @@ export default function Table({ users, isAdmin }) {
   const variant = useBreakpointValue({ base: true, md: "0" });
   const simpleGridBgValue = useColorModeValue("gray.100", "gray.700");
   const simpleGridColorValue = useColorModeValue("gray.500");
+  const filteredUsers = users.filter((us) => us.id !== 0);
   return (
     <Flex
       w="full"
@@ -38,7 +39,7 @@ export default function Table({ users, isAdmin }) {
         bg={{ md: stackBgValue }}
         shadow="lg"
       >
-        {users.map((person, pid) => {
+        {filteredUsers.map((person, pid) => {
           return (
             <Flex
               direction={{ base: "row", md: "column" }}

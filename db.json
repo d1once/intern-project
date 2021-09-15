@@ -10,38 +10,6 @@
       "isAdmin": true
     },
     {
-      "firstname": "Sunny",
-      "lastname": "Tromp",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "123456",
-      "id": 1
-    },
-    {
-      "firstname": "Zella",
-      "lastname": "Fay",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "65432`",
-      "id": 2
-    },
-    {
-      "firstname": "Herbert",
-      "lastname": "Turcotte",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "111111",
-      "id": 3
-    },
-    {
-      "firstname": "Carroll",
-      "lastname": "Williamson",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "222222",
-      "id": 4
-    },
-    {
       "firstname": "Jasper",
       "lastname": "Buckridge",
       "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
