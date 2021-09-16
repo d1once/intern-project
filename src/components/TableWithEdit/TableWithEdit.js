@@ -16,36 +16,19 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogContent,
-  AlertDialogOverlay,
   Button,
-  useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerFooter,
-  DrawerBody,
-  Stack,
-  Box,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Select,
-  Textarea,
 } from "@chakra-ui/react";
 import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
+import DrawerEdit from "../DrawerEdit/DrawerEdit";
 
 export default function TableWithEdit({ users }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [currentUserID, setCurrentUserID] = useState("");
+  const [user, setUser] = useState(null);
+  const [currentUserID, setCurrentUserID] = useState(null);
   const [deletedIds, setDeletedIds] = useState([0]);
   const onAlertClose = () => setIsAlertOpen(false);
   const cancelRef = useRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
   const header = ["name", "surname", "url", "email", "password", "id"];
   const tableBgValue = useColorModeValue("white", "gray.800");
@@ -53,12 +36,14 @@ export default function TableWithEdit({ users }) {
   const secondTdColorValue = useColorModeValue("gray.500");
   const thirdTdColorValue = useColorModeValue("gray.400", "gray.400");
   const filteredUsers = users.filter((us) => !deletedIds.includes(us.id));
+
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:3001/users/${id}`);
     const cDeletedIds = [...deletedIds];
     cDeletedIds.push(id);
     setDeletedIds(cDeletedIds);
   };
+  console.log("USERRRRRRRRRRRRRRRRRRRRR", user);
   return (
     <Flex
       w="full"
@@ -185,72 +170,17 @@ export default function TableWithEdit({ users }) {
                       <IconButton
                         colorScheme="green"
                         icon={<AiFillEdit />}
-                        onClick={onOpen}
+                        onClick={() => {
+                          setUser(users.find((user) => user.id === token.id));
+                        }}
                       />
-                      <Drawer
-                        isOpen={isOpen}
-                        placement="right"
-                        initialFocusRef={firstField}
-                        onClose={onClose}
-                        size="sm"
-                      >
-                        <DrawerContent>
-                          <DrawerCloseButton />
-                          <DrawerHeader borderBottomWidth="1px">
-                            Edit Current User
-                          </DrawerHeader>
-
-                          <DrawerBody>
-                            <Stack spacing="24px">
-                              <Box>
-                                <FormLabel htmlFor="firstname">
-                                  Firstname
-                                </FormLabel>
-                                <Input
-                                  ref={firstField}
-                                  id="firstname"
-                                  placeholder="Please enter user firstname"
-                                />
-                              </Box>
-                              <Box>
-                                <FormLabel htmlFor="lastname">
-                                  Lastname
-                                </FormLabel>
-                                <Input
-                                  id="lastname"
-                                  placeholder="Please enter user lastname"
-                                />
-                              </Box>
-                              <Box>
-                                <FormLabel htmlFor="email">Email</FormLabel>
-                                <Input
-                                  id="email"
-                                  placeholder="Please enter user email"
-                                />
-                              </Box>
-
-                              <Box>
-                                <FormLabel htmlFor="url">Url</FormLabel>
-                                <InputGroup>
-                                  <InputLeftAddon>https://</InputLeftAddon>
-                                  <Input
-                                    type="url"
-                                    id="url"
-                                    placeholder="Please enter domain"
-                                  />
-                                </InputGroup>
-                              </Box>
-                            </Stack>
-                          </DrawerBody>
-
-                          <DrawerFooter borderTopWidth="1px">
-                            <Button variant="outline" mr={3} onClick={onClose}>
-                              Cancel
-                            </Button>
-                            <Button colorScheme="blue">Submit</Button>
-                          </DrawerFooter>
-                        </DrawerContent>
-                      </Drawer>
+                      {user && (
+                        <DrawerEdit
+                          user={user}
+                          firstField={firstField}
+                          onClose={() => setUser(null)}
+                        />
+                      )}
                     </>
                     <>
                       <IconButton

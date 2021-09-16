@@ -10,38 +10,6 @@
       "isAdmin": true
     },
     {
-      "firstname": "Jasper",
-      "lastname": "Buckridge",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "333333",
-      "id": 5
-    },
-    {
-      "firstname": "Frieda",
-      "lastname": "McLaughlin",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "444444",
-      "id": 6
-    },
-    {
-      "firstname": "Marjory",
-      "lastname": "Bashirian",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "555555",
-      "id": 7
-    },
-    {
-      "firstname": "Willow",
-      "lastname": "Schroeder",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "666666",
-      "id": 8
-    },
-    {
       "firstname": "Kaelyn",
       "lastname": "Kohler",
       "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
@@ -128,30 +96,6 @@
       "email": "foo.bar@gmail.com",
       "password": "999999",
       "id": 19
-    },
-    {
-      "firstname": "Emmanuelle",
-      "lastname": "Gleichner",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "231012",
-      "id": 20
-    },
-    {
-      "firstname": "Josue",
-      "lastname": "Baumbach",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "foo.bar@gmail.com",
-      "password": "321454",
-      "id": 21
-    },
-    {
-      "firstname": "dionis",
-      "lastname": "jfkjdskfj",
-      "photoURL": "https://cdn.fakercloud.com/avatars/sydlawrence_128.jpg",
-      "email": "fdpsifodsf@gmail.com",
-      "password": "fjdksjfksdjfk",
-      "id": "ckte1ocwh00al26666yq9mc7u"
     }
   ]
 }
